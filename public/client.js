@@ -3,6 +3,8 @@ import { OrbitControls } from '/jsm/controls/OrbitControls.js';
 import Stats from '/jsm/libs/stats.module.js';
 
 // global variables
+window.earthSpeed=0;
+let speed=0.04;
 let scene;
 let camera;
 let renderer;
@@ -77,7 +79,7 @@ const starMesh = new THREE.Mesh(starGeometry, starMaterial);
 scene.add(starMesh);
 
 // ambient light
-const ambientlight = new THREE.AmbientLight(0xffffff, 0.2);
+const ambientlight = new THREE.AmbientLight(0xffffff, 0.01);
 scene.add(ambientlight);
 
 // point light
@@ -103,10 +105,11 @@ document.body.appendChild(stats.dom);
 
 // spinning animation
 const animate = () => {
+    console.log("Earthspeed in client.js:"+earthSpeed);
     requestAnimationFrame(animate);
-    starMesh.rotation.y -= 0.002;
-    earthMesh.rotation.y -= 0.0015;
-    cloudMesh.rotation.y -= 0.001;
+    starMesh.rotation.y -= 0.00001;
+    earthMesh.rotation.y -= (1*earthSpeed)*speed;
+    cloudMesh.rotation.y -= (1*earthSpeed*0.94)*speed;
     controls.update();
     render();
     stats.update();
